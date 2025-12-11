@@ -1,0 +1,2386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Wealth - Student Financial Literacy Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ====== ROOT VARIABLES ====== */
+        :root {
+            --primary-purple: #6A0DAD;
+            --secondary-purple: #8A2BE2;
+            --light-purple: #E6E6FA;
+            --primary-gold: #FFD700;
+            --secondary-gold: #F0C420;
+            --dark-gold: #B8860B;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --background-light: #F9F9FF;
+            --white: #FFFFFF;
+            --shadow: 0 5px 15px rgba(106, 13, 173, 0.1);
+            --border-radius: 10px;
+            --transition: all 0.3s ease;
+        }
+
+        /* ====== RESET & BASE STYLES ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ====== TYPOGRAPHY ====== */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--primary-purple);
+        }
+
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2.2rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.2rem; }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .highlight {
+            color: var(--primary-gold);
+            font-weight: 600;
+        }
+
+        /* ====== BUTTONS ====== */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(106, 13, 173, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary-gold);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-gold);
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary-purple);
+            color: var(--primary-purple);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-purple);
+            color: var(--white);
+        }
+
+        .btn-small {
+            padding: 8px 20px;
+            font-size: 0.9rem;
+        }
+
+        /* ====== HEADER & NAVIGATION ====== */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-purple);
+        }
+
+        .logo-icon {
+            color: var(--primary-gold);
+            font-size: 2rem;
+        }
+
+        .logo span {
+            color: var(--primary-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-purple);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-greeting {
+            font-weight: 600;
+            color: var(--primary-purple);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-purple);
+            cursor: pointer;
+        }
+
+        /* ====== MAIN CONTENT AREA ====== */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* ====== HERO SECTION ====== */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(106, 13, 173, 0.9), rgba(138, 43, 226, 0.9)),
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            text-align: center;
+            border-radius: var(--border-radius);
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        /* ====== SERVICES SECTION ====== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-gold);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .service-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border-top: 4px solid var(--primary-purple);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(106, 13, 173, 0.15);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .price-tag {
+            display: inline-block;
+            background-color: var(--light-purple);
+            color: var(--primary-purple);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+
+        /* ====== ABOUT SECTION ====== */
+        .about-section {
+            background-color: var(--white);
+            padding: 60px 0;
+            margin-bottom: 60px;
+            border-radius: var(--border-radius);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--background-light);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 15px;
+            font-weight: 700;
+        }
+
+        /* ====== FORMS ====== */
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-purple);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* ====== DASHBOARD ====== */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+            min-height: 600px;
+        }
+
+        .dashboard-sidebar {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .dashboard-menu {
+            list-style: none;
+        }
+
+        .dashboard-menu li {
+            margin-bottom: 15px;
+        }
+
+        .dashboard-menu a {
+            display: block;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            color: var(--text-dark);
+        }
+
+        .dashboard-menu a:hover,
+        .dashboard-menu a.active {
+            background-color: var(--light-purple);
+            color: var(--primary-purple);
+        }
+
+        .dashboard-content {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        /* ====== BLOG ====== */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .blog-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-content {
+            padding: 20px;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .blog-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* ====== BOOKING SYSTEM ====== */
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .calendar {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .time-slot {
+            padding: 10px;
+            text-align: center;
+            background-color: var(--light-purple);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .time-slot:hover,
+        .time-slot.selected {
+            background-color: var(--primary-purple);
+            color: var(--white);
+        }
+
+        .payment-details {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary-gold);
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-gold);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-gold);
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background-color: var(--primary-gold);
+            color: var(--primary-purple);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* ====== MODALS ====== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--primary-purple);
+        }
+
+        /* ====== UTILITY CLASSES ====== */
+        .text-center { text-align: center; }
+        .mb-20 { margin-bottom: 20px; }
+        .mb-30 { margin-bottom: 30px; }
+        .mt-20 { margin-top: 20px; }
+        .mt-30 { margin-top: 30px; }
+        .d-none { display: none; }
+        .d-flex { display: flex; }
+        .justify-between { justify-content: space-between; }
+        .align-center { align-items: center; }
+        .gap-10 { gap: 10px; }
+        .gap-20 { gap: 20px; }
+        .flex-wrap { flex-wrap: wrap; }
+
+        /* ====== RESPONSIVE STYLES ====== */
+        @media (max-width: 992px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 { font-size: 2.4rem; }
+            h2 { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .user-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+        }
+
+        /* ====== ADMIN BADGE ====== */
+        .admin-badge {
+            display: inline-block;
+            background-color: var(--primary-gold);
+            color: var(--text-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+
+        /* ====== STATUS BADGES ====== */
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-pending { background-color: #fff3cd; color: #856404; }
+        .status-approved { background-color: #d4edda; color: #155724; }
+        .status-completed { background-color: #d1ecf1; color: #0c5460; }
+        .status-cancelled { background-color: #f8d7da; color: #721c24; }
+
+        /* ====== NOTIFICATIONS ====== */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: var(--white);
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--primary-purple);
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-icon {
+            color: var(--primary-purple);
+            font-size: 1.2rem;
+        }
+        
+        /* ====== LOADING SPINNER ====== */
+        .spinner {
+            border: 4px solid var(--light-purple);
+            border-top: 4px solid var(--primary-purple);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <span>CAMPUS</span>WEALTH
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#about" class="nav-link">About Us</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#" id="dashboardLink" class="nav-link d-none">Dashboard</a></li>
+            </ul>
+            
+            <div class="user-actions">
+                <div id="userGreeting" class="user-greeting d-none"></div>
+                <button id="loginBtn" class="btn btn-primary btn-small">Login</button>
+                <button id="signupBtn" class="btn btn-outline btn-small">Sign Up</button>
+                <button id="logoutBtn" class="btn btn-secondary btn-small d-none">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="section active-section">
+            <div class="hero">
+                <div class="container">
+                    <h1>Empowering Students for Financial Success</h1>
+                    <p>Campus Wealth provides Nigerian university students with the tools, knowledge, and opportunities to build wealth, develop skills, and achieve financial independence while still in school.</p>
+                    <div class="mt-30">
+                        <a href="#services" class="btn btn-primary">Explore Our Services</a>
+                        <a href="#signup" class="btn btn-secondary ml-20">Join Now - It's Free!</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="container">
+                <div class="services-grid">
+                    <div class="service-card">
+                        <i class="fas fa-user-graduate service-icon"></i>
+                        <h3>500+</h3>
+                        <p>Students Empowered</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-money-check-alt service-icon"></i>
+                        <h3>₦2.5M+</h3>
+                        <p>Scholarships Secured</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-chart-line service-icon"></i>
+                        <h3>98%</h3>
+                        <p>Satisfaction Rate</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-users service-icon"></i>
+                        <h3>6</h3>
+                        <p>Expert Team Members</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="section d-none">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Services</h2>
+                    <p>Comprehensive financial solutions designed specifically for university students</p>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-card">
+                        <i class="fas fa-award service-icon"></i>
+                        <h3>Scholarship Application Assistance</h3>
+                        <p>Get personalized help finding and applying for scholarships that match your profile. Our experts will guide you through the entire process.</p>
+                        <div class="price-tag">FREE</div>
+                        <button class="btn btn-primary btn-small access-service" data-service="scholarship">Access Service</button>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-chart-pie service-icon"></i>
+                        <h3>Budgeting Workshops</h3>
+                        <p>Learn how to create and stick to a student budget. Our interactive workshops teach practical money management skills.</p>
+                        <div class="price-tag">FREE</div>
+                        <button class="btn btn-primary btn-small access-service" data-service="budgeting">Access Service</button>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-book-open service-icon"></i>
+                        <h3>Financial Literacy Courses</h3>
+                        <p>Self-paced online courses covering everything from basic banking to investment strategies for beginners.</p>
+                        <div class="price-tag">FREE</div>
+                        <button class="btn btn-primary btn-small access-service" data-service="courses">Access Service</button>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-handshake service-icon"></i>
+                        <h3>One-on-One Consulting</h3>
+                        <p>Personalized financial consulting sessions with our experts. Get tailored advice for your specific situation.</p>
+                        <div class="price-tag">₦5,000 - ₦25,000</div>
+                        <button class="btn btn-primary btn-small access-service" data-service="consulting">Book Session</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="section d-none">
+            <div class="container about-section">
+                <div class="section-title">
+                    <h2>About Campus Wealth</h2>
+                    <p>Made for students, by students</p>
+                </div>
+                
+                <div class="text-center mb-30">
+                    <p>Campus Wealth is a platform made for students by students, designed to help learners earn, grow skills, and build wealth while still in school. We provide practical tools, mentorship, and opportunities that turn ideas into income and knowledge into action.</p>
+                    <p>From campus-friendly skill development to financial education and personal growth, Campus Wealth equips students to take control of their financial future. Our platform allows students to learn at their own pace, connect with mentors, and access resources tailored to real campus life.</p>
+                </div>
+                
+                <h3 class="text-center mb-30">Meet Our Team</h3>
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">S</div>
+                        <h4>Shelah</h4>
+                        <p class="highlight">Entrepreneur</p>
+                        <p>Business development and student outreach</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">B</div>
+                        <h4>Buhari</h4>
+                        <p class="highlight">Entrepreneur</p>
+                        <p>Strategic partnerships and growth</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">S</div>
+                        <h4>Sadiq</h4>
+                        <p class="highlight">Techpreneur</p>
+                        <p>Platform development and tech solutions</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">T</div>
+                        <h4>Treasure</h4>
+                        <p class="highlight">Intrapreneur</p>
+                        <p>Content creation and user experience</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">K</div>
+                        <h4>Khadija</h4>
+                        <p class="highlight">Intrapreneur</p>
+                        <p>Community management and support</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">F</div>
+                        <h4>Favour</h4>
+                        <p class="highlight">Intrapreneur</p>
+                        <p>Program coordination and mentorship</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="section d-none">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Financial Tips Blog</h2>
+                    <p>Learn from experts and share your own financial wisdom</p>
+                </div>
+                
+                <div class="text-center mb-30">
+                    <button id="createPostBtn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Create New Post
+                    </button>
+                </div>
+                
+                <div class="blog-grid" id="blogPostsContainer">
+                    <!-- Blog posts will be loaded here dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section d-none">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Contact Us</h2>
+                    <p>Have questions or issues? We're here to help!</p>
+                </div>
+                
+                <div class="form-container">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="contactName" class="form-label">Full Name</label>
+                            <input type="text" id="contactName" class="form-control" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail" class="form-label">Email Address</label>
+                            <input type="email" id="contactEmail" class="form-control" placeholder="your.email@school.edu.ng" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject" class="form-label">Subject</label>
+                            <select id="contactSubject" class="form-control" required>
+                                <option value="">Select issue type</option>
+                                <option value="technical">Technical Issue</option>
+                                <option value="content">Content Question</option>
+                                <option value="consulting">Consulting Inquiry</option>
+                                <option value="suggestion">Suggestion</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage" class="form-label">Message</label>
+                            <textarea id="contactMessage" class="form-control" placeholder="Describe your issue or question..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            Submit Message
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="text-center mt-30">
+                    <p><i class="fas fa-envelope"></i> campuswealth44@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +234 810 123 4567</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section d-none">
+            <div class="container">
+                <h2 class="mb-30">User Dashboard</h2>
+                <div class="dashboard-container">
+                    <!-- Sidebar -->
+                    <div class="dashboard-sidebar">
+                        <h3 class="mb-20">Navigation</h3>
+                        <ul class="dashboard-menu">
+                            <li><a href="#" class="dashboard-tab active" data-tab="profile"><i class="fas fa-user"></i> My Profile</a></li>
+                            <li><a href="#" class="dashboard-tab" data-tab="my-posts"><i class="fas fa-edit"></i> My Blog Posts</a></li>
+                            <li><a href="#" class="dashboard-tab" data-tab="bookings"><i class="fas fa-calendar-check"></i> My Bookings</a></li>
+                            <li><a href="#" class="dashboard-tab" data-tab="admin" id="adminTabLink"><i class="fas fa-cog"></i> Admin Panel</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Content Area -->
+                    <div class="dashboard-content">
+                        <!-- Profile Tab -->
+                        <div id="profileTab" class="dashboard-tab-content active">
+                            <h3>My Profile</h3>
+                            <div class="form-container" style="box-shadow: none; padding: 0;">
+                                <div class="form-group">
+                                    <label class="form-label">Full Name</label>
+                                    <p id="dashboardUserName">Loading...</p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email Address</label>
+                                    <p id="dashboardUserEmail">Loading...</p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Account Type</label>
+                                    <p id="dashboardUserRole">Loading...</p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Member Since</label>
+                                    <p id="dashboardJoinDate">Loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- My Posts Tab -->
+                        <div id="my-postsTab" class="dashboard-tab-content d-none">
+                            <h3>My Blog Posts</h3>
+                            <div id="userPostsContainer">
+                                <!-- User's posts will be loaded here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Bookings Tab -->
+                        <div id="bookingsTab" class="dashboard-tab-content d-none">
+                            <h3>My Consultation Bookings</h3>
+                            <button id="newBookingBtn" class="btn btn-primary mb-20">
+                                <i class="fas fa-plus"></i> Book New Consultation
+                            </button>
+                            <div id="userBookingsContainer">
+                                <!-- User's bookings will be loaded here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Admin Panel Tab -->
+                        <div id="adminTab" class="dashboard-tab-content d-none">
+                            <h3>Admin Panel <span class="admin-badge">SUPER ADMIN</span></h3>
+                            
+                            <div class="mb-30">
+                                <h4>User Management</h4>
+                                <div id="adminUsersContainer">
+                                    <!-- Users list will be loaded here -->
+                                </div>
+                            </div>
+                            
+                            <div class="mb-30">
+                                <h4>Blog Post Moderation</h4>
+                                <div id="adminPostsContainer">
+                                    <!-- Posts for moderation will be loaded here -->
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4>Contact Submissions</h4>
+                                <div id="adminContactsContainer">
+                                    <!-- Contact submissions will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Modal -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Login to Campus Wealth</h3>
+                    <button class="modal-close" data-modal="loginModal">&times;</button>
+                </div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail" class="form-label">Email Address</label>
+                        <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                </form>
+                <p class="text-center mt-20">
+                    Don't have an account? <a href="#" id="showSignupFromLogin">Sign up here</a>
+                </p>
+                <div class="text-center mt-20">
+                    <p><strong>Demo Accounts:</strong></p>
+                    <p>Admin: idlern291@gmail.com / admin123</p>
+                    <p>User: student@uni.edu.ng / student123</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Modal -->
+        <div id="signupModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Create Your Campus Wealth Account</h3>
+                    <button class="modal-close" data-modal="signupModal">&times;</button>
+                </div>
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="signupName" class="form-label">Full Name</label>
+                        <input type="text" id="signupName" class="form-control" placeholder="Your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail" class="form-label">Email Address</label>
+                        <input type="email" id="signupEmail" class="form-control" placeholder="your.email@school.edu.ng" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword" class="form-label">Password</label>
+                        <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
+                        <input type="password" id="signupConfirmPassword" class="form-control" placeholder="Confirm your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                </form>
+                <p class="text-center mt-20">
+                    Already have an account? <a href="#" id="showLoginFromSignup">Login here</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Create Post Modal -->
+        <div id="createPostModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Create New Blog Post</h3>
+                    <button class="modal-close" data-modal="createPostModal">&times;</button>
+                </div>
+                <form id="createPostForm">
+                    <div class="form-group">
+                        <label for="postTitle" class="form-label">Post Title</label>
+                        <input type="text" id="postTitle" class="form-control" placeholder="Enter a catchy title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postCategory" class="form-label">Category</label>
+                        <select id="postCategory" class="form-control" required>
+                            <option value="">Select category</option>
+                            <option value="budgeting">Budgeting Tips</option>
+                            <option value="scholarships">Scholarships</option>
+                            <option value="saving">Saving Strategies</option>
+                            <option value="earning">Earning as a Student</option>
+                            <option value="investing">Investing Basics</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="postContent" class="form-label">Content</label>
+                        <textarea id="postContent" class="form-control" placeholder="Share your financial tips and insights..." rows="8" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit for Review</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Booking Modal -->
+        <div id="bookingModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Book a Consultation Session</h3>
+                    <button class="modal-close" data-modal="bookingModal">&times;</button>
+                </div>
+                <div class="booking-container">
+                    <div>
+                        <h4>Select Consultation Type</h4>
+                        <div class="form-group">
+                            <select id="consultationType" class="form-control">
+                                <option value="basic">Basic Consultation (₦5,000) - 30 mins</option>
+                                <option value="standard">Standard Consultation (₦12,000) - 1 hour</option>
+                                <option value="premium">Premium Consultation (₦25,000) - 2 hours + follow-up</option>
+                            </select>
+                        </div>
+                        
+                        <h4 class="mt-20">Select Date</h4>
+                        <div class="calendar">
+                            <div id="bookingCalendar">
+                                <!-- Calendar will be generated here -->
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-20">Select Time</h4>
+                        <div class="time-slots" id="timeSlotsContainer">
+                            <!-- Time slots will be generated here -->
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4>Payment Details</h4>
+                        <div class="payment-details">
+                            <p><strong>Consultation Fee:</strong> <span id="consultationFee">₦5,000</span></p>
+                            <p><strong>Duration:</strong> <span id="consultationDuration">30 minutes</span></p>
+                            <p><strong>Selected Date:</strong> <span id="selectedDate">Not selected</span></p>
+                            <p><strong>Selected Time:</strong> <span id="selectedTime">Not selected</span></p>
+                            
+                            <hr class="my-20">
+                            
+                            <h5>Bank Transfer Details:</h5>
+                            <p><strong>Bank:</strong> Campus Wealth Microfinance Bank</p>
+                            <p><strong>Account Name:</strong> Campus Wealth Consulting</p>
+                            <p><strong>Account Number:</strong> 1234567890</p>
+                            <p><strong>Amount:</strong> <span id="paymentAmount">₦5,000</span></p>
+                            
+                            <div class="form-group mt-20">
+                                <label class="form-label">Upload Proof of Payment</label>
+                                <input type="file" id="paymentProof" class="form-control" accept="image/*,.pdf">
+                            </div>
+                            
+                            <button id="confirmBookingBtn" class="btn btn-primary mt-20" style="width: 100%;">Confirm Booking</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div id="notification" class="notification">
+            <i class="fas fa-check-circle notification-icon"></i>
+            <span id="notificationMessage">Operation completed successfully!</span>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Campus Wealth</h3>
+                    <p>Empowering Nigerian university students with financial literacy, scholarship opportunities, and wealth-building strategies.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> campuswealth44@gmail.com</li>
+                        <li><i class="fas fa-phone"></i> +234 810 123 4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Campus Wealth. All rights reserved. | Presentation Demo Version</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ====== APPLICATION STATE ======
+        const state = {
+            currentUser: null,
+            users: [],
+            blogPosts: [],
+            bookings: [],
+            contactSubmissions: [],
+            isAdmin: false,
+            currentSection: 'home'
+        };
+
+        // ====== DEMO DATA ======
+        function initializeDemoData() {
+            // Demo users
+            state.users = [
+                {
+                    id: 1,
+                    name: "Admin User",
+                    email: "idlern291@gmail.com",
+                    password: "admin123",
+                    role: "admin",
+                    joinDate: "2023-10-01",
+                    isSuperAdmin: true
+                },
+                {
+                    id: 2,
+                    name: "John Student",
+                    email: "student@uni.edu.ng",
+                    password: "student123",
+                    role: "user",
+                    joinDate: "2023-10-15",
+                    isSuperAdmin: false
+                },
+                {
+                    id: 3,
+                    name: "Sarah Johnson",
+                    email: "sarah@uni.edu.ng",
+                    password: "password123",
+                    role: "user",
+                    joinDate: "2023-10-20",
+                    isSuperAdmin: false
+                }
+            ];
+
+            // Demo blog posts
+            state.blogPosts = [
+                {
+                    id: 1,
+                    title: "5 Budgeting Tips Every Student Should Know",
+                    content: "As a student, managing your finances can be challenging. Here are 5 essential budgeting tips: 1) Track all expenses, 2) Use the 50/30/20 rule, 3) Cook at home, 4) Use student discounts, 5) Set financial goals.",
+                    author: "John Student",
+                    authorId: 2,
+                    category: "budgeting",
+                    date: "2023-10-18",
+                    status: "approved",
+                    likes: 24,
+                    comments: 5
+                },
+                {
+                    id: 2,
+                    title: "How I Secured ₦500,000 in Scholarships",
+                    content: "Last semester, I applied for 15 scholarships and won 3 of them totaling ₦500,000. The key is starting early, tailoring each application, and following up. Don't get discouraged by rejections!",
+                    author: "Sarah Johnson",
+                    authorId: 3,
+                    category: "scholarships",
+                    date: "2023-10-22",
+                    status: "approved",
+                    likes: 42,
+                    comments: 8
+                },
+                {
+                    id: 3,
+                    title: "Investing Basics for Complete Beginners",
+                    content: "You don't need thousands to start investing. Begin with mutual funds or micro-investment apps. Even ₦1,000/month can grow significantly over time through compound interest.",
+                    author: "Admin User",
+                    authorId: 1,
+                    category: "investing",
+                    date: "2023-10-10",
+                    status: "approved",
+                    likes: 18,
+                    comments: 3
+                }
+            ];
+
+            // Demo bookings
+            state.bookings = [
+                {
+                    id: 1,
+                    userId: 2,
+                    userName: "John Student",
+                    type: "basic",
+                    date: "2023-11-05",
+                    time: "14:00",
+                    status: "completed",
+                    amount: 5000,
+                    paymentStatus: "paid"
+                },
+                {
+                    id: 2,
+                    userId: 3,
+                    userName: "Sarah Johnson",
+                    type: "standard",
+                    date: "2023-11-10",
+                    time: "10:00",
+                    status: "pending",
+                    amount: 12000,
+                    paymentStatus: "pending"
+                }
+            ];
+
+            // Demo contact submissions
+            state.contactSubmissions = [
+                {
+                    id: 1,
+                    name: "Michael Ade",
+                    email: "michael@uni.edu.ng",
+                    subject: "technical",
+                    message: "I can't access the budgeting workshop materials.",
+                    date: "2023-10-25",
+                    status: "resolved"
+                },
+                {
+                    id: 2,
+                    name: "Grace Okon",
+                    email: "grace@uni.edu.ng",
+                    subject: "consulting",
+                    message: "I'd like to book a consultation for next week.",
+                    date: "2023-10-26",
+                    status: "pending"
+                }
+            ];
+
+            // Load from localStorage if available
+            const savedState = localStorage.getItem('campusWealthState');
+            if (savedState) {
+                const parsed = JSON.parse(savedState);
+                Object.assign(state, parsed);
+            }
+
+            // Check if user is logged in from localStorage
+            const savedUser = localStorage.getItem('campusWealthUser');
+            if (savedUser) {
+                state.currentUser = JSON.parse(savedUser);
+                updateUIForUser();
+            }
+        }
+
+        // ====== UTILITY FUNCTIONS ======
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const icon = notification.querySelector('.notification-icon');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            messageEl.textContent = message;
+            
+            if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle notification-icon';
+                notification.style.borderLeftColor = '#dc3545';
+            } else if (type === 'warning') {
+                icon.className = 'fas fa-exclamation-triangle notification-icon';
+                notification.style.borderLeftColor = '#ffc107';
+            } else {
+                icon.className = 'fas fa-check-circle notification-icon';
+                notification.style.borderLeftColor = 'var(--primary-purple)';
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function saveState() {
+            localStorage.setItem('campusWealthState', JSON.stringify(state));
+            if (state.currentUser) {
+                localStorage.setItem('campusWealthUser', JSON.stringify(state.currentUser));
+            } else {
+                localStorage.removeItem('campusWealthUser');
+            }
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // ====== AUTHENTICATION FUNCTIONS ======
+        function login(email, password) {
+            const user = state.users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                state.currentUser = { ...user };
+                state.isAdmin = user.role === 'admin';
+                updateUIForUser();
+                showNotification(`Welcome back, ${user.name}!`);
+                saveState();
+                return true;
+            } else {
+                showNotification('Invalid email or password', 'error');
+                return false;
+            }
+        }
+
+        function signup(name, email, password) {
+            // Check if user already exists
+            if (state.users.some(u => u.email === email)) {
+                showNotification('User with this email already exists', 'error');
+                return false;
+            }
+            
+            const newUser = {
+                id: state.users.length + 1,
+                name,
+                email,
+                password,
+                role: 'user',
+                joinDate: new Date().toISOString().split('T')[0],
+                isSuperAdmin: false
+            };
+            
+            state.users.push(newUser);
+            state.currentUser = { ...newUser };
+            state.isAdmin = false;
+            
+            updateUIForUser();
+            showNotification('Account created successfully! Welcome to Campus Wealth!');
+            saveState();
+            return true;
+        }
+
+        function logout() {
+            state.currentUser = null;
+            state.isAdmin = false;
+            
+            // Update UI
+            document.getElementById('userGreeting').classList.add('d-none');
+            document.getElementById('logoutBtn').classList.add('d-none');
+            document.getElementById('loginBtn').classList.remove('d-none');
+            document.getElementById('signupBtn').classList.remove('d-none');
+            document.getElementById('dashboardLink').classList.add('d-none');
+            
+            // Redirect to home
+            showSection('home');
+            showNotification('Logged out successfully');
+            saveState();
+        }
+
+        function updateUIForUser() {
+            if (state.currentUser) {
+                document.getElementById('userGreeting').textContent = `Hi, ${state.currentUser.name}`;
+                document.getElementById('userGreeting').classList.remove('d-none');
+                document.getElementById('logoutBtn').classList.remove('d-none');
+                document.getElementById('loginBtn').classList.add('d-none');
+                document.getElementById('signupBtn').classList.add('d-none');
+                document.getElementById('dashboardLink').classList.remove('d-none');
+                
+                // Update dashboard link text for admin
+                if (state.isAdmin) {
+                    document.getElementById('dashboardLink').innerHTML = '<i class="fas fa-crown"></i> Dashboard';
+                }
+            }
+        }
+
+        // ====== BLOG FUNCTIONS ======
+        function createBlogPost(title, category, content) {
+            if (!state.currentUser) {
+                showNotification('Please login to create a post', 'error');
+                return false;
+            }
+            
+            const newPost = {
+                id: state.blogPosts.length + 1,
+                title,
+                content,
+                author: state.currentUser.name,
+                authorId: state.currentUser.id,
+                category,
+                date: new Date().toISOString().split('T')[0],
+                status: state.isAdmin ? 'approved' : 'pending',
+                likes: 0,
+                comments: 0
+            };
+            
+            state.blogPosts.unshift(newPost);
+            showNotification('Blog post submitted successfully! ' + (state.isAdmin ? 'Published immediately.' : 'Awaiting admin approval.'));
+            saveState();
+            loadBlogPosts();
+            
+            if (state.isAdmin) {
+                loadAdminPosts();
+            }
+            
+            return true;
+        }
+
+        function loadBlogPosts() {
+            const container = document.getElementById('blogPostsContainer');
+            const approvedPosts = state.blogPosts.filter(post => post.status === 'approved');
+            
+            if (approvedPosts.length === 0) {
+                container.innerHTML = '<p class="text-center">No blog posts yet. Be the first to share your financial tips!</p>';
+                return;
+            }
+            
+            container.innerHTML = approvedPosts.map(post => `
+                <div class="blog-card">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-user"></i> ${post.author}</span>
+                            <span><i class="fas fa-calendar"></i> ${formatDate(post.date)}</span>
+                        </div>
+                        <span class="status-badge status-${post.category}">${post.category.charAt(0).toUpperCase() + post.category.slice(1)}</span>
+                        <h4>${post.title}</h4>
+                        <p>${post.content.substring(0, 150)}${post.content.length > 150 ? '...' : ''}</p>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-heart"></i> ${post.likes} likes</span>
+                            <span><i class="fas fa-comment"></i> ${post.comments} comments</span>
+                        </div>
+                        ${state.currentUser && state.currentUser.id === post.authorId ? `
+                        <div class="blog-actions">
+                            <button class="btn btn-outline btn-small" onclick="editPost(${post.id})">Edit</button>
+                            <button class="btn btn-secondary btn-small" onclick="deletePost(${post.id})">Delete</button>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadUserPosts() {
+            if (!state.currentUser) return;
+            
+            const container = document.getElementById('userPostsContainer');
+            const userPosts = state.blogPosts.filter(post => post.authorId === state.currentUser.id);
+            
+            if (userPosts.length === 0) {
+                container.innerHTML = '<p>You haven\'t created any blog posts yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = userPosts.map(post => `
+                <div class="blog-card" style="margin-bottom: 20px;">
+                    <div class="blog-content">
+                        <div class="d-flex justify-between align-center">
+                            <h4>${post.title}</h4>
+                            <span class="status-badge status-${post.status}">${post.status}</span>
+                        </div>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> ${formatDate(post.date)}</span>
+                            <span><i class="fas fa-folder"></i> ${post.category}</span>
+                        </div>
+                        <p>${post.content.substring(0, 100)}${post.content.length > 100 ? '...' : ''}</p>
+                        <div class="blog-actions">
+                            <button class="btn btn-outline btn-small" onclick="editPost(${post.id})">Edit</button>
+                            <button class="btn btn-secondary btn-small" onclick="deletePost(${post.id})">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ====== DASHBOARD FUNCTIONS ======
+        function loadDashboardProfile() {
+            if (!state.currentUser) return;
+            
+            document.getElementById('dashboardUserName').textContent = state.currentUser.name;
+            document.getElementById('dashboardUserEmail').textContent = state.currentUser.email;
+            document.getElementById('dashboardUserRole').textContent = state.currentUser.role.charAt(0).toUpperCase() + state.currentUser.role.slice(1) + 
+                (state.currentUser.isSuperAdmin ? ' (Super Admin)' : '');
+            document.getElementById('dashboardJoinDate').textContent = formatDate(state.currentUser.joinDate);
+            
+            // Show/hide admin tab
+            if (state.isAdmin) {
+                document.getElementById('adminTabLink').classList.remove('d-none');
+            } else {
+                document.getElementById('adminTabLink').classList.add('d-none');
+            }
+        }
+
+        function loadUserBookings() {
+            if (!state.currentUser) return;
+            
+            const container = document.getElementById('userBookingsContainer');
+            const userBookings = state.bookings.filter(booking => booking.userId === state.currentUser.id);
+            
+            if (userBookings.length === 0) {
+                container.innerHTML = '<p>You haven\'t booked any consultations yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = userBookings.map(booking => `
+                <div class="service-card" style="margin-bottom: 15px;">
+                    <h4>${booking.type.charAt(0).toUpperCase() + booking.type.slice(1)} Consultation</h4>
+                    <p><strong>Date:</strong> ${formatDate(booking.date)} at ${booking.time}</p>
+                    <p><strong>Amount:</strong> ₦${booking.amount.toLocaleString()}</p>
+                    <p><strong>Status:</strong> <span class="status-badge status-${booking.status}">${booking.status}</span></p>
+                    <p><strong>Payment:</strong> <span class="status-badge status-${booking.paymentStatus}">${booking.paymentStatus}</span></p>
+                    ${booking.status === 'pending' ? `
+                    <button class="btn btn-secondary btn-small mt-10" onclick="cancelBooking(${booking.id})">Cancel Booking</button>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // ====== ADMIN FUNCTIONS ======
+        function loadAdminUsers() {
+            if (!state.isAdmin) return;
+            
+            const container = document.getElementById('adminUsersContainer');
+            container.innerHTML = state.users.map(user => `
+                <div class="d-flex justify-between align-center mb-10" style="background: var(--light-purple); padding: 10px 15px; border-radius: 5px;">
+                    <div>
+                        <strong>${user.name}</strong>
+                        <p style="margin: 5px 0 0; font-size: 0.9rem;">${user.email}</p>
+                    </div>
+                    <div>
+                        <span class="status-badge ${user.role === 'admin' ? 'status-approved' : 'status-pending'}">
+                            ${user.role}
+                        </span>
+                        ${user.id !== state.currentUser.id ? `
+                        <button class="btn btn-outline btn-small" onclick="deleteUser(${user.id})">Delete</button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadAdminPosts() {
+            if (!state.isAdmin) return;
+            
+            const container = document.getElementById('adminPostsContainer');
+            const pendingPosts = state.blogPosts.filter(post => post.status === 'pending');
+            
+            if (pendingPosts.length === 0) {
+                container.innerHTML = '<p>No posts pending approval.</p>';
+                return;
+            }
+            
+            container.innerHTML = pendingPosts.map(post => `
+                <div class="blog-card" style="margin-bottom: 15px;">
+                    <div class="blog-content">
+                        <h4>${post.title}</h4>
+                        <p><strong>Author:</strong> ${post.author}</p>
+                        <p>${post.content.substring(0, 100)}...</p>
+                        <div class="blog-actions">
+                            <button class="btn btn-primary btn-small" onclick="approvePost(${post.id})">Approve</button>
+                            <button class="btn btn-secondary btn-small" onclick="rejectPost(${post.id})">Reject</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadAdminContacts() {
+            if (!state.isAdmin) return;
+            
+            const container = document.getElementById('adminContactsContainer');
+            
+            if (state.contactSubmissions.length === 0) {
+                container.innerHTML = '<p>No contact submissions yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = state.contactSubmissions.map(contact => `
+                <div class="service-card" style="margin-bottom: 15px;">
+                    <div class="d-flex justify-between align-center">
+                        <h4>${contact.name}</h4>
+                        <span class="status-badge status-${contact.status}">${contact.status}</span>
+                    </div>
+                    <p><strong>Email:</strong> ${contact.email}</p>
+                    <p><strong>Subject:</strong> ${contact.subject}</p>
+                    <p><strong>Message:</strong> ${contact.message}</p>
+                    <p><strong>Date:</strong> ${formatDate(contact.date)}</p>
+                    ${contact.status === 'pending' ? `
+                    <button class="btn btn-primary btn-small" onclick="markContactResolved(${contact.id})">Mark as Resolved</button>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // ====== BOOKING FUNCTIONS ======
+        function setupBookingCalendar() {
+            const calendar = document.getElementById('bookingCalendar');
+            const today = new Date();
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            
+            let html = '<div class="d-flex justify-between mb-10"><strong>November 2023</strong></div>';
+            html += '<div class="d-flex flex-wrap" style="gap: 5px;">';
+            
+            // Generate next 14 days
+            for (let i = 1; i <= 14; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                
+                // Skip weekends for demo
+                if (date.getDay() === 0 || date.getDay() === 6) continue;
+                
+                const dateString = date.toISOString().split('T')[0];
+                const dayName = days[date.getDay()];
+                const dayNum = date.getDate();
+                
+                html += `
+                    <div class="time-slot date-slot" data-date="${dateString}" style="padding: 15px; text-align: center; min-width: 60px;">
+                        <div style="font-size: 0.8rem;">${dayName}</div>
+                        <div style="font-weight: bold; font-size: 1.2rem;">${dayNum}</div>
+                    </div>
+                `;
+            }
+            
+            html += '</div>';
+            calendar.innerHTML = html;
+            
+            // Add click handlers for date selection
+            document.querySelectorAll('.date-slot').forEach(slot => {
+                slot.addEventListener('click', function() {
+                    document.querySelectorAll('.date-slot').forEach(s => s.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    const selectedDate = this.dataset.date;
+                    document.getElementById('selectedDate').textContent = formatDate(selectedDate);
+                    
+                    // Generate time slots for selected date
+                    generateTimeSlots(selectedDate);
+                });
+            });
+            
+            // Select today + 2 days by default
+            const defaultDate = new Date(today);
+            defaultDate.setDate(today.getDate() + 2);
+            const defaultDateString = defaultDate.toISOString().split('T')[0];
+            
+            // Find and click the default date
+            setTimeout(() => {
+                const defaultSlot = document.querySelector(`.date-slot[data-date="${defaultDateString}"]`);
+                if (defaultSlot) {
+                    defaultSlot.click();
+                }
+            }, 100);
+        }
+
+        function generateTimeSlots(dateString) {
+            const container = document.getElementById('timeSlotsContainer');
+            const slots = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
+            
+            container.innerHTML = slots.map(time => `
+                <div class="time-slot" data-time="${time}">${time}</div>
+            `).join('');
+            
+            // Add click handlers for time selection
+            document.querySelectorAll('#timeSlotsContainer .time-slot').forEach(slot => {
+                slot.addEventListener('click', function() {
+                    document.querySelectorAll('#timeSlotsContainer .time-slot').forEach(s => s.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('selectedTime').textContent = this.dataset.time;
+                });
+            });
+            
+            // Select 10:00 by default
+            setTimeout(() => {
+                const defaultTime = container.querySelector('.time-slot[data-time="10:00"]');
+                if (defaultTime) {
+                    defaultTime.click();
+                }
+            }, 100);
+        }
+
+        function createBooking(type, date, time) {
+            if (!state.currentUser) {
+                showNotification('Please login to book a consultation', 'error');
+                return false;
+            }
+            
+            const priceMap = {
+                'basic': 5000,
+                'standard': 12000,
+                'premium': 25000
+            };
+            
+            const durationMap = {
+                'basic': '30 minutes',
+                'standard': '1 hour',
+                'premium': '2 hours + follow-up'
+            };
+            
+            const newBooking = {
+                id: state.bookings.length + 1,
+                userId: state.currentUser.id,
+                userName: state.currentUser.name,
+                type,
+                date,
+                time,
+                status: 'pending',
+                amount: priceMap[type],
+                paymentStatus: 'pending'
+            };
+            
+            state.bookings.unshift(newBooking);
+            showNotification(`Consultation booked successfully! Please complete payment of ₦${priceMap[type].toLocaleString()} to confirm.`);
+            saveState();
+            
+            // Update user bookings if on dashboard
+            if (document.getElementById('bookingsTab').classList.contains('active')) {
+                loadUserBookings();
+            }
+            
+            // Update admin panel if admin is viewing
+            if (state.isAdmin) {
+                loadAdminUsers();
+            }
+            
+            return true;
+        }
+
+        // ====== CONTACT FORM ======
+        function submitContactForm(name, email, subject, message) {
+            const newContact = {
+                id: state.contactSubmissions.length + 1,
+                name,
+                email,
+                subject,
+                message,
+                date: new Date().toISOString().split('T')[0],
+                status: 'pending'
+            };
+            
+            state.contactSubmissions.push(newContact);
+            showNotification('Message sent successfully! We\'ll get back to you soon.');
+            saveState();
+            
+            // Update admin panel if admin is viewing
+            if (state.isAdmin && document.getElementById('adminTab').classList.contains('active')) {
+                loadAdminContacts();
+            }
+            
+            // In a real app, you would send this to campuswealth44@gmail.com
+            console.log('Contact form submission:', newContact);
+            
+            return true;
+        }
+
+        // ====== UI NAVIGATION ======
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('d-none');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('d-none');
+            
+            // Update active nav link
+            document.querySelector(`.nav-link[href="#${sectionId}"]`).classList.add('active');
+            
+            // Update current section
+            state.currentSection = sectionId;
+            
+            // Load section-specific content
+            if (sectionId === 'blog') {
+                loadBlogPosts();
+            } else if (sectionId === 'dashboard') {
+                loadDashboardProfile();
+                loadUserPosts();
+                loadUserBookings();
+                
+                if (state.isAdmin) {
+                    loadAdminUsers();
+                    loadAdminPosts();
+                    loadAdminContacts();
+                }
+            }
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function setupDashboardTabs() {
+            document.querySelectorAll('.dashboard-tab').forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const tabName = this.dataset.tab;
+                    
+                    // Update active tab
+                    document.querySelectorAll('.dashboard-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    document.querySelectorAll('.dashboard-tab-content').forEach(content => {
+                        content.classList.add('d-none');
+                    });
+                    document.getElementById(tabName + 'Tab').classList.remove('d-none');
+                    
+                    // Load tab-specific data
+                    if (tabName === 'my-posts') {
+                        loadUserPosts();
+                    } else if (tabName === 'bookings') {
+                        loadUserBookings();
+                    } else if (tabName === 'admin') {
+                        if (state.isAdmin) {
+                            loadAdminUsers();
+                            loadAdminPosts();
+                            loadAdminContacts();
+                        }
+                    }
+                });
+            });
+        }
+
+        // ====== EVENT LISTENERS SETUP ======
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('href').substring(1);
+                    showSection(sectionId);
+                    
+                    // Close mobile menu if open
+                    document.querySelector('.nav-links').classList.remove('active');
+                    document.querySelector('.mobile-menu-btn i').className = 'fas fa-bars';
+                });
+            });
+            
+            // Mobile menu toggle
+            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+                const navLinks = document.querySelector('.nav-links');
+                navLinks.classList.toggle('active');
+                this.querySelector('i').className = navLinks.classList.contains('active') 
+                    ? 'fas fa-times' 
+                    : 'fas fa-bars';
+            });
+            
+            // Auth buttons
+            document.getElementById('loginBtn').addEventListener('click', () => showModal('loginModal'));
+            document.getElementById('signupBtn').addEventListener('click', () => showModal('signupModal'));
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+            document.getElementById('dashboardLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                if (state.currentUser) {
+                    showSection('dashboard');
+                } else {
+                    showNotification('Please login to access dashboard', 'error');
+                }
+            });
+            
+            // Modal close buttons
+            document.querySelectorAll('.modal-close').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const modalId = this.dataset.modal;
+                    hideModal(modalId);
+                });
+            });
+            
+            // Modal backdrop click to close
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Auth forms
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (login(email, password)) {
+                    hideModal('loginModal');
+                    this.reset();
+                    showSection('home');
+                }
+            });
+            
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('signupName').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('signupConfirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    showNotification('Passwords do not match', 'error');
+                    return;
+                }
+                
+                if (signup(name, email, password)) {
+                    hideModal('signupModal');
+                    this.reset();
+                    showSection('home');
+                }
+            });
+            
+            // Switch between login/signup modals
+            document.getElementById('showSignupFromLogin').addEventListener('click', function(e) {
+                e.preventDefault();
+                hideModal('loginModal');
+                showModal('signupModal');
+            });
+            
+            document.getElementById('showLoginFromSignup').addEventListener('click', function(e) {
+                e.preventDefault();
+                hideModal('signupModal');
+                showModal('loginModal');
+            });
+            
+            // Blog post creation
+            document.getElementById('createPostBtn').addEventListener('click', () => {
+                if (state.currentUser) {
+                    showModal('createPostModal');
+                } else {
+                    showNotification('Please login to create a blog post', 'error');
+                }
+            });
+            
+            document.getElementById('createPostForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const title = document.getElementById('postTitle').value;
+                const category = document.getElementById('postCategory').value;
+                const content = document.getElementById('postContent').value;
+                
+                if (createBlogPost(title, category, content)) {
+                    hideModal('createPostModal');
+                    this.reset();
+                    
+                    // If on blog section, refresh posts
+                    if (state.currentSection === 'blog') {
+                        loadBlogPosts();
+                    }
+                }
+            });
+            
+            // Contact form
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('contactName').value;
+                const email = document.getElementById('contactEmail').value;
+                const subject = document.getElementById('contactSubject').value;
+                const message = document.getElementById('contactMessage').value;
+                
+                if (submitContactForm(name, email, subject, message)) {
+                    this.reset();
+                    showNotification('Message sent successfully!');
+                }
+            });
+            
+            // Service access buttons
+            document.querySelectorAll('.access-service').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const service = this.dataset.service;
+                    
+                    if (service === 'consulting') {
+                        if (state.currentUser) {
+                            showModal('bookingModal');
+                        } else {
+                            showNotification('Please login to book a consultation', 'error');
+                            showModal('loginModal');
+                        }
+                    } else {
+                        showNotification(`Accessing ${service} service... This would redirect to the service page in a live version.`);
+                    }
+                });
+            });
+            
+            // Booking system
+            document.getElementById('consultationType').addEventListener('change', function() {
+                const type = this.value;
+                const priceMap = {
+                    'basic': 5000,
+                    'standard': 12000,
+                    'premium': 25000
+                };
+                const durationMap = {
+                    'basic': '30 minutes',
+                    'standard': '1 hour',
+                    'premium': '2 hours + follow-up'
+                };
+                
+                document.getElementById('consultationFee').textContent = `₦${priceMap[type].toLocaleString()}`;
+                document.getElementById('consultationDuration').textContent = durationMap[type];
+                document.getElementById('paymentAmount').textContent = `₦${priceMap[type].toLocaleString()}`;
+            });
+            
+            document.getElementById('newBookingBtn').addEventListener('click', () => {
+                showModal('bookingModal');
+            });
+            
+            document.getElementById('confirmBookingBtn').addEventListener('click', function() {
+                const type = document.getElementById('consultationType').value;
+                const dateElement = document.querySelector('.date-slot.selected');
+                const timeElement = document.querySelector('#timeSlotsContainer .time-slot.selected');
+                
+                if (!dateElement || !timeElement) {
+                    showNotification('Please select both date and time', 'error');
+                    return;
+                }
+                
+                const date = dateElement.dataset.date;
+                const time = timeElement.dataset.time;
+                
+                if (createBooking(type, date, time)) {
+                    hideModal('bookingModal');
+                    showSection('dashboard');
+                    
+                    // Switch to bookings tab
+                    document.querySelector('.dashboard-tab[data-tab="bookings"]').click();
+                }
+            });
+            
+            // Setup dashboard tabs
+            setupDashboardTabs();
+        }
+
+        // ====== ADMIN ACTION FUNCTIONS (called from onclick) ======
+        window.approvePost = function(postId) {
+            const post = state.blogPosts.find(p => p.id === postId);
+            if (post) {
+                post.status = 'approved';
+                showNotification('Post approved successfully!');
+                saveState();
+                loadAdminPosts();
+                loadBlogPosts();
+            }
+        };
+
+        window.rejectPost = function(postId) {
+            if (confirm('Are you sure you want to reject this post?')) {
+                state.blogPosts = state.blogPosts.filter(p => p.id !== postId);
+                showNotification('Post rejected and deleted');
+                saveState();
+                loadAdminPosts();
+                loadBlogPosts();
+            }
+        };
+
+        window.deletePost = function(postId) {
+            if (confirm('Are you sure you want to delete this post?')) {
+                state.blogPosts = state.blogPosts.filter(p => p.id !== postId);
+                showNotification('Post deleted successfully');
+                saveState();
+                loadBlogPosts();
+                loadUserPosts();
+                if (state.isAdmin) {
+                    loadAdminPosts();
+                }
+            }
+        };
+
+        window.editPost = function(postId) {
+            const post = state.blogPosts.find(p => p.id === postId);
+            if (post) {
+                document.getElementById('postTitle').value = post.title;
+                document.getElementById('postCategory').value = post.category;
+                document.getElementById('postContent').value = post.content;
+                showModal('createPostModal');
+                
+                // Update form to edit mode
+                const form = document.getElementById('createPostForm');
+                const originalSubmit = form.onsubmit;
+                form.onsubmit = function(e) {
+                    e.preventDefault();
+                    post.title = document.getElementById('postTitle').value;
+                    post.category = document.getElementById('postCategory').value;
+                    post.content = document.getElementById('postContent').value;
+                    post.status = state.isAdmin ? 'approved' : 'pending';
+                    
+                    showNotification('Post updated successfully! ' + (state.isAdmin ? 'Published immediately.' : 'Awaiting admin approval.'));
+                    hideModal('createPostModal');
+                    saveState();
+                    loadBlogPosts();
+                    loadUserPosts();
+                    if (state.isAdmin) {
+                        loadAdminPosts();
+                    }
+                    
+                    // Reset form handler
+                    form.onsubmit = originalSubmit;
+                    form.reset();
+                };
+            }
+        };
+
+        window.deleteUser = function(userId) {
+            if (confirm('Are you sure you want to delete this user? This will also delete their posts and bookings.')) {
+                // Don't allow deleting self
+                if (userId === state.currentUser.id) {
+                    showNotification('You cannot delete your own account', 'error');
+                    return;
+                }
+                
+                // Delete user's posts
+                state.blogPosts = state.blogPosts.filter(p => p.authorId !== userId);
+                
+                // Delete user's bookings
+                state.bookings = state.bookings.filter(b => b.userId !== userId);
+                
+                // Delete user
+                state.users = state.users.filter(u => u.id !== userId);
+                
+                showNotification('User deleted successfully');
+                saveState();
+                loadAdminUsers();
+                loadBlogPosts();
+            }
+        };
+
+        window.markContactResolved = function(contactId) {
+            const contact = state.contactSubmissions.find(c => c.id === contactId);
+            if (contact) {
+                contact.status = 'resolved';
+                showNotification('Contact marked as resolved');
+                saveState();
+                loadAdminContacts();
+            }
+        };
+
+        window.cancelBooking = function(bookingId) {
+            if (confirm('Are you sure you want to cancel this booking?')) {
+                const booking = state.bookings.find(b => b.id === bookingId);
+                if (booking) {
+                    booking.status = 'cancelled';
+                    showNotification('Booking cancelled successfully');
+                    saveState();
+                    loadUserBookings();
+                }
+            }
+        };
+
+        // ====== INITIALIZATION ======
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize demo data
+            initializeDemoData();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Setup booking calendar
+            setupBookingCalendar();
+            
+            // Load initial content
+            loadBlogPosts();
+            
+            // Show notification on first load
+            setTimeout(() => {
+                showNotification('Welcome to Campus Wealth! Use admin@example.com / admin123 to login as admin.');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
